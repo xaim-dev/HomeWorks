@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="menu">
+            <h1 class="menu__title">Меню</h1>
+            <ul class="menu__list">
+                <li class="menu__item" v-for="order in menuList" :key="order.id">
+                    <p class="menu__item-name">{{order.title}}</p>
+                    <div class="menu__item-price">{{order.price}}₴</div>
+                    <button class="menu__btn" @click="onOrder(order.id)">Замовити</button>
+                </li>
+            </ul>
+        </div>
+        <div class="wrapper">
+            <div class="ordered">
+                <h3 class="ordered__title">Замовлені страви</h3>
+                <ul class="ordered__list">
+                    <li class="ordered__item" v-for="dish in orderedDishes" :key="dish.id">
+                        <p class="menu__item-name">{{dish.title}}</p>
+                        <div class="menu__item-price">{{dish.price}}₴</div>
+                        <button class="menu__btn" @click="onDone(dish.id)">Готово</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="delivery">
+                <h3 class="devilery__title">Готові до видачі страви</h3>
+                <ul class="delivery__list">
+                    <li class="delivery__item" v-for="serveDish in readyToServe" :key="serveDish.id">
+                        <p class="menu__item-name">{{serveDish.title}}</p>
+                        <div class="menu__item-price">{{serveDish.price}}₴</div>
+                        <button class="menu__btn" @click="onServe(serveDish.id)">Видано</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="coocked">
+                <h3 class="coocked__title">Приготовані страви</h3>
+                <ul class="coocked__list">
+                    <li class="coocked__item" v-for="coockedDish in coockedDishes" :key="coockedDish.id">
+                        <p class="menu__item-name">{{coockedDish.title}}</p>
+                        <div class="menu__item-price">{{coockedDish.price}}₴</div>
+                    </li>
+                </ul>
+                <hr class="line">
+                <div class="total">Всього зароблено : {{totalSales}}</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    menuList: [
+                        {
+                            id: '1',
+                            title: 'Голубці',
+                            price: 50,
+                        },
+                        {
+                            id: '2',
+                            title: 'Борщ',
+                            price: 25,
+                        },
+                        {
+                            id: '3',
+                            title: 'Вареники',
+                            price: 45,
+                        },
+                    ],
+                    orderedDishes: [],
+                    readyToServe: [],
+                    coockedDishes: []
+                }
+            },
+            computed: {
+                totalSales() {
+                    let sale = 0;
+                    this.coockedDishes.forEach(element => sale += element.price);
+                    return sale;
+                }
+            },
+            methods: {
+                onOrder(dishIdToOrdered) {
+                    const dishIndex = this.menuList.findIndex(
+                        (order) => order.id === dishIdToOrdered
+                    )
+                    this.orderedDishes.push(this.menuList[dishIndex])
+                },
+                onDone(dishIdToServe) {
+                    const serveIndex = this.orderedDishes.findIndex(
+                        (dish) => dish.id === dishIdToServe
+                    )
+                    if (serveIndex !== -1) {
+                        this.readyToServe.push(this.orderedDishes[serveIndex])
+                        this.orderedDishes.splice(serveIndex, 1)
+                    }
+                    this.orderedDishes = this.orderedDishes.filter(
+                        (dish) => serveIndex !== dishIdToServe
+                    )
+
+                },
+                onServe(dishIdDone) {
+                    const doneIndex = this.readyToServe.findIndex(
+                        (serveDish) => serveDish.id === dishIdDone
+                    )
+                    if (doneIndex !== -1) {
+                        this.coockedDishes.push(this.readyToServe[doneIndex])
+                        this.readyToServe.splice(doneIndex, 1)
+                    }
+                    this.readyToServe = this.readyToServe.filter(
+                        (serveDish) => doneIndex !== dishIdDone
+                    )
+                }
+            },
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

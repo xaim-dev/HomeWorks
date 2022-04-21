@@ -1,0 +1,76 @@
+.menu {
+    margin-bottom: 30px;
+}
+
+.menu,
+.ordered,
+.delivery,
+.coocked {
+    background-image: url(../images/wood.jpg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 500px;
+    border-radius: 20px;
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    color: #fff;
+    padding: 15px;
+}
+
+.menu__title,
+.ordered__title,
+.devilery__title,
+.coocked__title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+.menu__list {
+    
+}
+.menu__item,
+.ordered__item,
+.delivery__item,
+.coocked__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+.menu__item + .menu__item {
+    margin-top: 15px;
+}
+.menu__item-name {
+    width: 100px;
+    margin: 0;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+}
+.menu__item-price {
+    font-size: 25px;
+}
+.menu__btn,
+.total__btn {
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    padding: 5px 10px;
+    background-color: #1437AD;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.wrapper {
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.line {
+    border: none;
+    height: 1px;
+    background-color: #fff;
+}
