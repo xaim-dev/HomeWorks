@@ -2,7 +2,7 @@
   <div>
     <form class="form">
       <div class="weather__top">
-        <select class="select__city" v-model="weatherList">
+        <select class="select__city" v-model="weatherList"> Бажано не створювати великих компонентів. Краще розбивати на більш маленькі
           <option v-for="weather in weatherListData" :key="weather.id"
                   :value="weather.city"> {{weather.city}}</option>
         </select>
